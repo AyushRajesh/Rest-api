@@ -210,19 +210,3 @@ http://127.0.0.1:5000/book/id
 ```PYTHON
 The book with id: 14 has been deleted.
 ```
-
-# Try to delete same book again
-
-## Request
-```PYTHON
-DELETE/book/id
-```
-
-```PYTHON
-http://127.0.0.1:5000/book/id
-```
-## Response
-
-```PYTHON
-127.0.0.1 - - [19/Jun/2021 14:54:49] "DELETE /book/14 HTTP/1.1" 404 -
-```
