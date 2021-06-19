@@ -18,33 +18,6 @@ def db_connection():
         print(e)
     return conn
 
-# books_list=[
-#     {
-#         "id":0,
-#         "author":"Chinua Achebe",
-#         "language":"English",
-#         "title":"Things Fall Apart",
-#     },
-#     {
-#         "id":1,
-#         "author":"Hans Christian Andersen",
-#         "language":"Danish",
-#         "title":"Fairy tales",
-#     },
-#     {
-#         "id":2,
-#         "author":"xyz",
-#         "language":"Hindi",
-#         "title":"ABC",
-#     },
-#     {
-#         "id":3,
-#         "author":"Chetan Baghat",
-#         "language":"Hindi",
-#         "title":"Two States",
-#     }
-# ]
-
 @app.route('/books', methods=['GET','POST'])
 def books():
     conn=db_connection()
@@ -58,38 +31,21 @@ def books():
         ]
         if books is not None:
             return jsonify(books)
-         # if len(books_list)>0:
-            # return jsonify(books_list)
-        # else:
-            # 'Nothing Found', 404
+ 
     if request.method=='POST':
         new_author=request.form['author']
         new_lang=request.form['language']
         new_title=request.form['title']
-        # iD=books_list[-1]['id']+1
-        # sql= f"INSERT INTO book(author, language, title)) VALUES(%s, %s, %s)"
         cursor.execute("INSERT INTO book (author, language, title) VALUES(%s, %s, %s)", (new_author, new_lang, new_title,))
         conn.commit()
         return "Book details created successfully"
 
-    # new_obj={
-    #     'id':iD,
-        # 'author':new_author,
-        # 'language':new_lang,
-        # 'title':new_title
-    # }
-    # books_list.append(new_obj)
-    # return jsonify(books_list),201
 @app.route('/book/<int:id>', methods=['GET','PUT','DELETE'])
 def single_book(id):
     conn=db_connection()
     cursor=conn.cursor()
     book=None
     if request.method=='GET':
-        # for book in books_list:
-        #     if book['id']== id:
-                # return jsonify(book)
-            # pass
        cursor.execute("SELECT * FROM book WHERE id=%s",(id,))
        rows=cursor.fetchall()
        for r in rows:
@@ -101,12 +57,9 @@ def single_book(id):
 
     if request.method=='PUT':
         try:
-            # if book['id']==id:
             author=request.form['author']
             language=request.form['language']
             title=request.form['title']
-
-            # sql = f"UPDATE book SET author=%s, language=%s, title=%s WHERE id=%s"
             cursor.execute("UPDATE book SET author=%s, language=%s, title=%s WHERE id=%s",(author, language, title, id,))
             conn.commit()
             updated_book = {
@@ -123,10 +76,6 @@ def single_book(id):
         cursor.execute(sql,(id))
         conn.commit()
         return "The book with id: {} has been deleted.".format(id), 200
-        # for index, book in enumerate(books_list):
-        #     if book['id']==id:
-                # books_list.pop(index)
-                # return jsonify(books_list)
 
 if __name__=='__main__':
     app.run(debug=True)
