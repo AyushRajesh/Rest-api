@@ -17,8 +17,8 @@ Rest_API to Insert and Retrieve some data from a database table.
 ### Paths
  A good RESTful design has a pattern for the URL, such that:
 - GET:/books- Returns an arrary of "book" record.
-- GET:/books/id- Gets a specific "book" record.
-- PUT:/books/id- Updates a specific "book" record.
+- GET:/book/id- Gets a specific "book" record.
+- PUT:/book/id- Updates a specific "book" record.
 - POST:/books/- Creates a new "book" record.
 - DELETE:/book/id-Deletes a "book" record.
 
